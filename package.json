@@ -1,0 +1,24 @@
+{
+  "name": "rock-checkin-rpc-client",
+  "version": "1.0.0",
+  "description": "An RPC client that allows kiosk devices to provide printing services to the RockRMS Check-in web app.",
+  "main": "dist/checkin-rpc.js",
+  "types": "dist/checkin-rpc.d.ts",
+  "scripts": {
+    "build": "webpack",
+    "watch": "webpack --watch"
+  },
+  "author": "Tyler Schrock <tschrock@newpointe.org>",
+  "license": "MPL-2.0",
+  "devDependencies": {
+    "@types/node": "^13.13.1",
+    "@typescript-eslint/eslint-plugin": "^2.29.0",
+    "@typescript-eslint/parser": "^2.29.0",
+    "eslint": "^6.8.0",
+    "ts-loader": "^7.0.1",
+    "ts-node": "^8.9.0",
+    "typescript": "^3.8.3",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
+  }
+}
