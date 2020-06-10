@@ -28,7 +28,7 @@ export class WebMessageRpcConnection extends RpcConnection {
     private OnWindowMessage(ev: MessageEvent): void {
         if (
             compareOrigins(window.location.toString(), ev.origin)
-            && ev.data === "CHECKIN_RPC_CLIENT_INIT"
+            && ev.data === "KIOSK_RPC_CLIENT_INIT"
             && ev.ports.length === 1
         ) {
             console.info('WebMessageRpcConnection: Got init message.');

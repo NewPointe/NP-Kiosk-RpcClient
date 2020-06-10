@@ -1,7 +1,7 @@
 import { CheckinLabel } from "./models/CheckinLabel";
 import { ZebraCard } from "./models/ZebraCard";
 
-export interface CheckinRpcClientApi {
+export interface KioskRpcClientApi {
 
     // RockCheckinNative
 

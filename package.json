@@ -1,9 +1,9 @@
 {
-  "name": "rock-checkin-rpc-client",
+  "name": "np-kiosk-rpc-client",
   "version": "1.0.0",
   "description": "An RPC client that allows kiosk devices to provide printing services to the RockRMS Check-in web app.",
-  "main": "dist/checkin-rpc.js",
-  "types": "dist/checkin-rpc.d.ts",
+  "main": "dist/kiosk-rpc.js",
+  "types": "dist/kiosk-rpc.d.ts",
   "scripts": {
     "build": "webpack",
     "watch": "webpack --watch"

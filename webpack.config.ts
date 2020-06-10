@@ -6,7 +6,7 @@ const outRoot = path.resolve(__dirname, 'dist');
 export = {
     mode: "production" as const,
     context: srcRoot,
-    entry: './checkin-rpc.ts',
+    entry: './kiosk-rpc.ts',
     module: {
         rules: [
             {
@@ -20,7 +20,7 @@ export = {
         extensions: ['.tsx', '.ts', '.js'],
     },
     output: {
-        filename: './checkin-rpc.js',
+        filename: './kiosk-rpc.js',
         path: outRoot,
     },
 };

@@ -1,17 +1,17 @@
 import { CheckinLabel } from "./models/CheckinLabel";
-import { CheckinRpcClientApi } from "./CheckinRpcClientApi";
-import { CheckinRpcClientConfig } from "./CheckinRpcClientConfig";
+import { KioskRpcClientApi } from "./KioskRpcClientApi";
+import { KioskRpcClientConfig } from "./KioskRpcClientConfig";
 import { WebMessageRpcConnection, RpcConnection } from "./rpc";
 import { ZebraCard } from "./models";
 
-export class CheckinRpcClient implements CheckinRpcClientApi {
+export class KioskRpcClient implements KioskRpcClientApi {
     private readonly connection: RpcConnection;
-    constructor(config: CheckinRpcClientConfig) {
+    constructor(config: KioskRpcClientConfig) {
         if(config.connection === "webmessage") {
             this.connection = new WebMessageRpcConnection();
         }
         else {
-            throw new Error(`CheckinRpcClient: Invalid config.connection value "${config.connection}".`);
+            throw new Error(`KioskRpcClient: Invalid config.connection value "${config.connection}".`);
         }
     }
 

@@ -1,10 +1,10 @@
 
-import { CheckinRpcClient, CheckinRpcClientConfig, JsonValue, CheckinRpcClientApi } from './lib';
-export { CheckinRpcClient, CheckinRpcClientConfig };
+import { KioskRpcClient, KioskRpcClientConfig, JsonValue, KioskRpcClientApi } from './lib';
+export { KioskRpcClient, KioskRpcClientConfig };
 
 declare global {
     interface Window {
-        _checkinRpcClientInit?: boolean;
+        _kioskRpcClientInit?: boolean;
         ZebraPrintPlugin?: {
             printTags?: (labelJson: string, success: () => void, fail: () => void) => void;
         };
@@ -13,8 +13,8 @@ declare global {
         };
         labelData?: JsonValue;
         onDeviceReady?: () => void;
-        RockCheckinNative?: CheckinRpcClientApi;
-        NewPointeKiosk?: CheckinRpcClientApi;
+        RockCheckinNative?: KioskRpcClientApi;
+        NewPointeKiosk?: KioskRpcClientApi;
     }
     interface External {
         PrintLabels?: (labels: string) => void;
@@ -26,8 +26,8 @@ function tryParse<T>(data: string): Promise<T> {
     return new Promise(resolve => resolve(JSON.parse(data)));
 }
 
-function initRpcClient(config: CheckinRpcClientConfig): void {
-    const client = window.RockCheckinNative = window.NewPointeKiosk = new CheckinRpcClient(config);
+function initRpcClient(config: KioskRpcClientConfig): void {
+    const client = window.RockCheckinNative = window.NewPointeKiosk = new KioskRpcClient(config);
     if (config.shim) {
 
         // Windows client compatibility shim
@@ -63,15 +63,15 @@ function initRpcClient(config: CheckinRpcClientConfig): void {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-    if (!window._checkinRpcClientInit) {
-        window._checkinRpcClientInit = true;
-        const initElement = document.getElementById("checkin-rpc-init");
+    if (!window._kioskRpcClientInit) {
+        window._kioskRpcClientInit = true;
+        const initElement = document.getElementById("kiosk-rpc-init");
         if (initElement instanceof HTMLScriptElement) {
             const content = initElement.innerHTML;
             if (content.trim()) {
-                tryParse<CheckinRpcClientConfig>(content).then(
+                tryParse<KioskRpcClientConfig>(content).then(
                     config => initRpcClient(config),
-                    error => console.error(`checkin-rpc: Found a 'checkin-rpc-init' element, but it did not contain valid JSON.\nDetails: ${error}`)
+                    error => console.error(`kiosk-rpc: Found a 'kiosk-rpc-init' element, but it did not contain valid JSON.\nDetails: ${error}`)
                 );
             }
             else if (initElement.src) {
@@ -80,35 +80,35 @@ window.addEventListener('DOMContentLoaded', () => {
                         if (data.ok) {
                             data.json().then(
                                 config => initRpcClient(config),
-                                error => console.error(`checkin-rpc: Found a 'checkin-rpc-init' element, but it did not contain valid JSON.\nDetails: ${error}`)
+                                error => console.error(`kiosk-rpc: Found a 'kiosk-rpc-init' element, but it did not contain valid JSON.\nDetails: ${error}`)
                             );
                         }
                         else {
-                            console.error(`checkin-rpc: Found a 'checkin-rpc-init' element, but it's source could not be loaded.\nUrl: ${data.url}\nStatus: ${data.status} ${data.statusText}`)
+                            console.error(`kiosk-rpc: Found a 'kiosk-rpc-init' element, but it's source could not be loaded.\nUrl: ${data.url}\nStatus: ${data.status} ${data.statusText}`)
                         }
                     })
                     .catch(
-                        error => console.error(`checkin-rpc: Found a 'checkin-rpc-init' element, but it's source could not be loaded.\nDetails: ${error}`)
+                        error => console.error(`kiosk-rpc: Found a 'kiosk-rpc-init' element, but it's source could not be loaded.\nDetails: ${error}`)
                     );
             }
             else {
-                console.error("checkin-rpc: Found a 'checkin-rpc-init' element, but it was empty.");
+                console.error("kiosk-rpc: Found a 'kiosk-rpc-init' element, but it was empty.");
             }
         }
         else if (initElement instanceof HTMLInputElement) {
             const content = initElement.value;
             if (content.trim()) {
-                tryParse<CheckinRpcClientConfig>(content).then(
+                tryParse<KioskRpcClientConfig>(content).then(
                     config => initRpcClient(config),
-                    error => console.error(`checkin-rpc: Found a 'checkin-rpc-init' element, but it did not contain valid JSON.\nDetails: ${error}`)
+                    error => console.error(`kiosk-rpc: Found a 'kiosk-rpc-init' element, but it did not contain valid JSON.\nDetails: ${error}`)
                 );
             }
             else {
-                console.error("checkin-rpc: Found a 'checkin-rpc-init' element, but it was empty.");
+                console.error("kiosk-rpc: Found a 'kiosk-rpc-init' element, but it was empty.");
             }
         }
         else if (initElement) {
-            console.error("checkin-rpc: Found a 'checkin-rpc-init' element, but it is not a supported element type.");
+            console.error("kiosk-rpc: Found a 'kiosk-rpc-init' element, but it is not a supported element type.");
         }
     }
 });

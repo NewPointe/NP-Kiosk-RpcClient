@@ -1,4 +1,4 @@
-export interface CheckinRpcClientConfig {
+export interface KioskRpcClientConfig {
     connection: string;
     shim: true;
 }
