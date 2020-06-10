@@ -15,23 +15,35 @@ export class CheckinRpcClient implements CheckinRpcClientApi {
         }
     }
 
-    printLabels(labels: CheckinLabel[]): Promise<void> {
-        return this.connection.sendRequest("printLabels", [labels]);
+    PrintLabels(labels: CheckinLabel[]): Promise<void> {
+        return this.connection.sendRequest("PrintLabels", [labels]);
     }
 
-    printCards(cards: ZebraCard[]): Promise<void> {
-        return this.connection.sendRequest("printCards", [cards]);
+    StartCamera(passive: boolean): Promise<void> {
+        return this.connection.sendRequest("StartCamera", [passive]);
     }
 
-    getAppPreference(key: string): Promise<string> {
-        return this.connection.sendRequest("getAppPreference", [key]);
+    StopCamera(): Promise<void> {
+        return this.connection.sendRequest("StopCamera", []);
     }
 
-    setAppPreference(key: string, value: string | null): Promise<boolean> {
-        return this.connection.sendRequest("setAppPreference", [key, value]);
+    SetKioskId(kioskId: number): Promise<void> {
+        return this.connection.sendRequest("SetKioskId", [kioskId]);
     }
 
-    showSettings(): Promise<void> {
-        return this.connection.sendRequest("showSettings", []);
+    PrintCards(cards: ZebraCard[]): Promise<void> {
+        return this.connection.sendRequest("PrintCards", [cards]);
+    }
+
+    GetAppPreference(key: string): Promise<string | null> {
+        return this.connection.sendRequest("GetAppPreference", [key]);
+    }
+
+    SetAppPreference(key: string, value: string | null): Promise<boolean> {
+        return this.connection.sendRequest("SetAppPreference", [key, value]);
+    }
+
+    ShowSettings(): Promise<void> {
+        return this.connection.sendRequest("ShowSettings", []);
     }
 }

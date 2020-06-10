@@ -29,10 +29,11 @@ export abstract class RpcConnection {
      * @return A promise for the result of executing the method.
      */
     public sendRequest<TResp extends JsonValue | void>(method: string, params: RpcRequestParameters): Promise<TResp> {
-        const id = generateGuid();
-        const callback = new Promise<TResp>((resolve, reject) => this.callbacks.set(id, { resolve, reject }));
-        this.internalWrite(JSON.stringify({ jsonrpc: "2.0", method, params, id }));
-        return callback;
+        return new Promise((resolve, reject) => {
+            const id = generateGuid();
+            this.callbacks.set(id, { resolve, reject })
+            this.internalWrite(JSON.stringify({ jsonrpc: "2.0", method, params, id }));
+        });
     }
 
     /**
