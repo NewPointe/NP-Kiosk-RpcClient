@@ -1,4 +1,4 @@
-import { JsonObject } from "./rpc";
+import { JsonObject } from "../rpc";
 
 export interface CheckinLabel extends JsonObject {
     FileGuid: string;

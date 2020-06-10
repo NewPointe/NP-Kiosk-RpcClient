@@ -1,7 +1,8 @@
-import { CheckinLabel } from "./CheckinLabel";
+import { CheckinLabel } from "./models/CheckinLabel";
 import { CheckinRpcClientApi } from "./CheckinRpcClientApi";
 import { CheckinRpcClientConfig } from "./CheckinRpcClientConfig";
 import { WebMessageRpcConnection, RpcConnection } from "./rpc";
+import { ZebraCard } from "./models";
 
 export class CheckinRpcClient implements CheckinRpcClientApi {
     private readonly connection: RpcConnection;
@@ -16,6 +17,10 @@ export class CheckinRpcClient implements CheckinRpcClientApi {
 
     printLabels(labels: CheckinLabel[]): Promise<void> {
         return this.connection.sendRequest("printLabels", [labels]);
+    }
+
+    printCards(cards: ZebraCard[]): Promise<void> {
+        return this.connection.sendRequest("printCards", [cards]);
     }
 
     getAppPreference(key: string): Promise<string> {

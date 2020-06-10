@@ -1,5 +1,5 @@
 export * from './rpc'
-export * from './CheckinLabel'
+export * from './models'
 export * from './CheckinRpcApi'
 export * from './CheckinRpcClient'
 export * from './CheckinRpcClientApi'
