@@ -1,4 +1,4 @@
-import { GraphicType, PrintType, CardSide } from "./enumerations";
+import { GraphicType, PrintType, CardSide, OrientationType } from "./enumerations";
 import { Byte } from "./Byte";
 import { JsonObject } from "src/lib/rpc";
 
@@ -33,4 +33,7 @@ export interface GraphicsInfo extends JsonObject {
 
     /** Y-offset (pixels) from origin 0, 0.  */
     YOffset: number;
+
+    /** The orientation of the image. */
+    orientation: OrientationType;
 }
