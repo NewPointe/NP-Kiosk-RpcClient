@@ -1,5 +1,5 @@
 
-import { CheckinRpcClient, CheckinRpcClientConfig, JsonValue } from './lib';
+import { CheckinRpcClient, CheckinRpcClientConfig, JsonValue, CheckinRpcClientApi } from './lib';
 export { CheckinRpcClient, CheckinRpcClientConfig };
 
 declare global {
@@ -13,6 +13,8 @@ declare global {
         };
         labelData?: JsonValue;
         onDeviceReady?: () => void;
+        RockCheckinNative?: CheckinRpcClientApi;
+        NewPointeKiosk?: CheckinRpcClientApi;
     }
     interface External {
         PrintLabels?: (labels: string) => void;
@@ -25,27 +27,27 @@ function tryParse<T>(data: string): Promise<T> {
 }
 
 function initRpcClient(config: CheckinRpcClientConfig): void {
-    const client = new CheckinRpcClient(config);
+    const client = window.RockCheckinNative = window.NewPointeKiosk = new CheckinRpcClient(config);
     if (config.shim) {
 
         // Windows client compatibility shim
         if (!window.external) (window as any).external = {};
         window.external.PrintLabels = (labelsJson: string): void => {
-            client.printLabels(JSON.parse(labelsJson));
+            client.PrintLabels(JSON.parse(labelsJson));
         };
 
         // iOS client compatibility shim
         if (!window.Cordova) window.Cordova = {};
         window.Cordova.exec = (success, fail, classname, method, args): void => {
             if (classname === "ZebraPrint" && method === "printTags") {
-                client.printLabels(JSON.parse(args[0])).then(success, fail);
+                client.PrintLabels(JSON.parse(args[0])).then(success, fail);
             }
             else if (classname === "ApplicationPreferences") {
                 if (method === "getSetting") {
-                    client.getAppPreference(args[0].key).then(success, fail);
+                    client.GetAppPreference(args[0].key).then(success, fail);
                 }
                 else if (method === "setSetting") {
-                    client.setAppPreference(args[0].key, args[0].value).then(success, fail);
+                    client.SetAppPreference(args[0].key, args[0].value).then(success, fail);
                 }
             }
         };
@@ -53,7 +55,7 @@ function initRpcClient(config: CheckinRpcClientConfig): void {
         // ZebraPrintPlugin compatibility shim
         if (!window.ZebraPrintPlugin) window.ZebraPrintPlugin = {};
         window.ZebraPrintPlugin.printTags = (labelJson, success, fail): void => {
-            client.printLabels(JSON.parse(labelJson)).then(success, fail);
+            client.PrintLabels(JSON.parse(labelJson)).then(success, fail);
         };
 
 
